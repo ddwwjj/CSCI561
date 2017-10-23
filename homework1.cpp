@@ -1,5 +1,6 @@
-// homework.cpp: 定义控制台应用程序的入口点。
+// homework1.cpp
 //update date: 9/15/2017
+//score: 100
 //version 4
 /*
 implement segmentation array for contradiction search
@@ -20,7 +21,7 @@ int lizards; //num of lizards
 int num_tree = 0;
 bool flag = false;//for SA, in case of dead loop
 
-				  //For SA, counting contradiction faster
+//For SA, counting contradiction faster
 vector<vector<int> > colum_seg;
 vector<vector<int> > row_seg;
 vector<vector<int> > left_up;
@@ -41,14 +42,14 @@ typedef struct Queue {
     (h)->next = (h)->next->next; \
     (h)->next->prev = (h)
 
-//for DFS
+//for DFS,stack
 #define QUEUE_INSERT_FRONT(h, q) \
     (h)->next->prev = (q); \
     (q)->prev       = (h); \
     (q)->next       = (h)->next; \
     (h)->next       = (q)
 
-//for BFS
+//for BFS,queue
 #define QUEUE_INSERT_BACK(h,q) \
     (h)->prev->next = (q); \
     (q)-> next = (h); \
@@ -97,6 +98,7 @@ void DFSNode_Create(DFS_node* Node, Grid grid, int s_p, int level) {
 	Node->level = level;
 }
 
+// for BFS
 // every time with a new node poped, have to update the nursery state
 void update(vector<Grid>&solution) {
 	int m, n;
@@ -107,7 +109,7 @@ void update(vector<Grid>&solution) {
 		nursery[m][n] = 1;
 	}
 }
-
+// for SA, count the contradiction for a position change
 void count_value(int*value) {
 	int temp;
 	for (temp = 1; temp < seg_array.size(); temp++) {
@@ -117,6 +119,7 @@ void count_value(int*value) {
 	}
 }
 
+//After adding a new lizard, need to update the nursery state and segmentation state
 void update_segmentation(vector<Grid>&solution) {
 	int m, n;
 	int temp;
@@ -136,6 +139,7 @@ void update_segmentation(vector<Grid>&solution) {
 	}
 }
 
+//After expending one node, need to recover the nursery state and segmentation state
 void rec_segmentation(vector<Grid>&solution) {
 	int m, n;
 	int temp;
@@ -287,7 +291,6 @@ bool BFS_search(BFS_node* Head, int End_level) {
 
 		cur_node = (BFS_node*)Head->queue.next;
 		QUEUE_REMOVE_FRONT(&(Head->queue));
-		//update(cur_node->solution); // every time with a new node poped, have to update the nursery state
 		cur_level = cur_node->level;
 
 		if (cur_level == End_level) {
@@ -320,6 +323,7 @@ bool BFS_search(BFS_node* Head, int End_level) {
 }
 
 /*
+recursion version, system stack is faster than stack implementated by myself
 get a node,update the current nursery state, start searching from s_p to create new child
 */
 bool DFS_search(DFS_node* cur_node, int End_level, time_t start) {
