@@ -1,19 +1,21 @@
-// homeworkcpp.cpp: 定义控制台应用程序的入口点。
+// homework2.cpp
 //date:16/10/2017
 /*Version:4
-不含swap，平台不认
-select the first move using alpha-belta prunning
-for fruit 1, 2 and 3, 
-width<=10, depth=5;
-width<=26, depth=3
+No memfree cause system will release memory automatically.
+Select the first move using alpha-belta prunning.
+My opponent is either ramdom agent or minimax agent with no alpha-beta wand lookahead depth limited to 3(max-min-max).
+Principle： searching as depth as possible to beat them, due to time constrains, I can't search thoroughly but at least deeper than opponent.
+
+For fruit 1, 2 and 3, 
+width<=10, depth=5; less than60's left, depth=4; less than 10's left, depth=3;
+width<=26, depth=3; less than 60's left, depth=2; less than 10's left, depth=1;
 
 for fruit4~9
-width<=10, depth=4;
-width<=20, depth=3;
-width<=26, depth=2
+width<=10, depth=4; less than 60's left, depth=3; less than 10's left, depth=2;
+width<=20, depth=3; less than 60's left, depth=2; less than 10's left, depth=1;
+width<=26, depth=2; less than 60's left, depth=1;
 
-<60s, depth-1;
-<10s, depth-2;
+Special cases: when width=2,3, it is most likely to tie, but the residual times are same, so no worries.
 */
 
 #include <iostream>
