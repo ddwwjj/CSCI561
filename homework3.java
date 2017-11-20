@@ -45,12 +45,12 @@ public class homework {
 	static int final_variable_num = 0; // After finishing one query's resolution, I need to reset variable_num in case it keep growing
 	static String[] queries; // query sentences
 	static ArrayList<String> kb = new ArrayList<String>(); //kb sentences
-	static ArrayList<String> new_sentences = new ArrayList<String>();//new sentences need to be resolved at each round, the old one has been deleted after his part finished (Ã¿ÂÖĞèÒªËÑË÷kb×öresolutionµÄ¾ä×Ó£¬¶¯Ì¬¸üĞÂ)
+	static ArrayList<String> new_sentences = new ArrayList<String>();//new sentences need to be resolved at each round, the old one has been deleted after his part finished (æ¯è½®éœ€è¦æœç´¢kbåšresolutionçš„å¥å­ï¼ŒåŠ¨æ€æ›´æ–°)
 	static ArrayList<HashMap<String,HashSet<String>>> new_cls = new ArrayList<HashMap<String,HashSet<String>>>(); //pack each new sentence as a HashMap, just like mainkb
-	static ArrayList<String> final_new_sentences = new ArrayList<String>() ; //store first round new sentences(kb sentences that contain constants) except for query (´æ´¢Êı¾İ¿â×îÔ­Ê¼µÄ°üº¬constantµÄ¾ä×Ó£¬Ã¿¸öquery´¦ÀíÍê±Ïºófinal_new_sentences²»±ä)
-	static ArrayList<HashMap<String,HashSet<String>>> final_cls = new ArrayList<HashMap<String,HashSet<String>>>(); //corresponding to final_new_sentences (Óëfinal_new_sentencesÏà¶ÔÓ¦)
+	static ArrayList<String> final_new_sentences = new ArrayList<String>() ; //store first round new sentences(kb sentences that contain constants) except for query (å­˜å‚¨æ•°æ®åº“æœ€åŸå§‹çš„åŒ…å«constantçš„å¥å­ï¼Œæ¯ä¸ªqueryå¤„ç†å®Œæ¯•åfinal_new_sentencesä¸å˜)
+	static ArrayList<HashMap<String,HashSet<String>>> final_cls = new ArrayList<HashMap<String,HashSet<String>>>(); //corresponding to final_new_sentences (ä¸final_new_sentencesç›¸å¯¹åº”)
 	static ArrayList<Integer> constant_sentences_index = new ArrayList<Integer>();//store sentences index that has been unified with specific sentence. During one round unify, I need to make sure that if two sentences are both from new clauses, they should only unify with each other once, and one sentence should not unify with itself
-	static HashSet<String> final_check = new HashSet<String>();//maintain kb and abandon duplicated sentences (Î¬»¤»ù´¡kbµÄcheck)
+	static HashSet<String> final_check = new HashSet<String>();//maintain kb and abandon duplicated sentences (ç»´æŠ¤åŸºç¡€kbçš„check)
 	static ArrayList<String> results = new ArrayList<String>();//resolution result for each sentence
 	
 	public static void main(String[] args) {
@@ -150,14 +150,14 @@ public class homework {
 					variables = variables+str[k];
 					k++;
 				}
-				//½«ËùÓĞconstant±ä³ÉÈ«²¿´óĞ´
+				//å°†æ‰€æœ‰constantå˜æˆå…¨éƒ¨å¤§å†™
 				String variable_split[] = variables.split("\\,");
 				for(int j=0;j<variable_split.length;j++){
 					if(Character.isUpperCase(variable_split[j].charAt(0))){
 						flag_constant = true;
 						temp = temp.replaceAll(variable_split[j], variable_split[j].toUpperCase());
 					}
-					//½«constantÖĞµÄÊı×ÖÒ²»»³ÉconstantµÄÊ××ÖÄ¸£¬±ÜÃâÓë±äÁ¿µÄÊı×Ö±ä»»»ìÏı
+					//å°†constantä¸­çš„æ•°å­—ä¹Ÿæ¢æˆconstantçš„é¦–å­—æ¯ï¼Œé¿å…ä¸å˜é‡çš„æ•°å­—å˜æ¢æ··æ·†
 					Pattern p = Pattern.compile(".*\\d+.*");
 					Matcher m = p.matcher(variable_split[j]);
 					if(m.matches()){
@@ -165,7 +165,7 @@ public class homework {
 						temp = temp.replaceAll(variable_split[j], str1);
 					}
 				}
-				//½«ËùÓĞ±äÁ¿standardize,constantÈ«±ä³É´óĞ´Ö®ºó¾Í²»»áÓĞLizÊÜzÓ°ÏìµÄÎÊÌâÁË£¬ËùÒÔÒ»¶¨ÒªÏÈ±ä´óĞ´ÔÚ±ê×¼»¯¡£
+				//å°†æ‰€æœ‰å˜é‡standardize,constantå…¨å˜æˆå¤§å†™ä¹‹åå°±ä¸ä¼šæœ‰Lizå—zå½±å“çš„é—®é¢˜äº†ï¼Œæ‰€ä»¥ä¸€å®šè¦å…ˆå˜å¤§å†™åœ¨æ ‡å‡†åŒ–ã€‚
 				for(int j=0;j<variable_split.length;j++){
 					if(Character.isLowerCase(variable_split[j].charAt(0))){
 						temp = temp.replaceAll(variable_split[j], variable_split[j]+final_variable_num);
@@ -234,7 +234,7 @@ public class homework {
 				if(Character.isUpperCase(q_variable_split[temp].charAt(0))){
 					queries[i] = queries[i].replaceAll(q_variable_split[temp], q_variable_split[temp].toUpperCase());
 				}
-				//½«constantÖĞµÄÊı×ÖÒ²»»³ÉconstantµÄÊ××ÖÄ¸£¬±ÜÃâÓë±äÁ¿µÄÊı×Ö±ä»»»ìÏı
+				//å°†constantä¸­çš„æ•°å­—ä¹Ÿæ¢æˆconstantçš„é¦–å­—æ¯ï¼Œé¿å…ä¸å˜é‡çš„æ•°å­—å˜æ¢æ··æ·†
 				Pattern p = Pattern.compile(".*\\d+.*");
 				Matcher m = p.matcher(q_variable_split[temp]);
 				if(m.matches()){
@@ -320,7 +320,7 @@ public class homework {
 			first_non_duplicate_unify.add(new HashSet<Integer>());
 		}
 		for(int i=0;i<cur_newclauses;i++){
-			//Ã¿´Îresolve new_clsÖĞµÄÒ»¸ö¾ä×Ó£¬½á¹û´æ´¢ÔÚnew_sentencesÖĞ£¬É¾³ınew_clsÍÆÑİ¹ıµÄ¾ä×Ó
+			//æ¯æ¬¡resolve new_clsä¸­çš„ä¸€ä¸ªå¥å­ï¼Œç»“æœå­˜å‚¨åœ¨new_sentencesä¸­ï¼Œåˆ é™¤new_clsæ¨æ¼”è¿‡çš„å¥å­
 			Map<String,Set<String>> querymap = new HashMap<String,Set<String>>(new_cls.get(0));
 			new_cls.remove(0);
 			resolve(first_non_duplicate_unify, predicatemap, querymap,i,constant_sentences_index.get(i));
@@ -342,11 +342,11 @@ public class homework {
 		 * the condition to stop iteration should be 
 		 * 1. get "" -> true
 		 * 2. no new sentences -> false
-		 * 3. round < 13 -> false (the new clauses will keep growing and never stop, it is false generally
+		 * 3. total_sentences >maximum_sentences -> false (the new clauses will keep growing and never stop, it is false generally
 		 * 4. new_clauses > 1000 -> false (same as 3)
 		 */
-		int round=1;
-		while(round<13){
+		int maximum_sentences = Math.max(10*kb_num, 20000);
+		while(kb.size()<maximum_sentences){
 			
 			cur_newclauses = new_sentences.size();
 			if(cur_newclauses>10000){
@@ -382,8 +382,7 @@ public class homework {
 				results.add("FALSE");
 				return;
 			}
-			//·ñÔò¼ÌĞøÑ­»·
-			round++;			
+			//å¦åˆ™ç»§ç»­å¾ªç¯			
 		}
 		results.add("FALSE");		
 	}
@@ -402,7 +401,7 @@ public class homework {
 		 * */
 		for(Entry<String, Set<String>> entry : querymap.entrySet()){
 			String predicate = entry.getKey();
-			//queriesÊÇÒ»¸öpredicate(map.key)ÏÂËùÓĞµÄliteral
+			//queriesæ˜¯ä¸€ä¸ªpredicate(map.key)ä¸‹æ‰€æœ‰çš„literal
 			Set<String> queries = entry.getValue();
 			
 			//resolve one literal at a time
@@ -420,7 +419,7 @@ public class homework {
 					}
 				}
 				q_variable_split = q_variable.split("\\,");
-				HashSet<Integer> potential_sentences = new HashSet<Integer>(); //ËùÓĞ¾ä×ÓµÄÏÂ±ê
+				HashSet<Integer> potential_sentences = new HashSet<Integer>(); //æ‰€æœ‰å¥å­çš„ä¸‹æ ‡
 				String potential_key; //on the opposite of predicate
 				if(predicate.charAt(0) == '~'){
 					potential_key = predicate.substring(1,predicate.length());
@@ -438,11 +437,11 @@ public class homework {
 				Iterator<Integer> iter = potential_sentences.iterator();  
 				while(iter.hasNext()){	
 					int index = iter.next();
-					//ÅĞ¶ÏÒªunifyµÄ¾ä×ÓÊÇ·ñÓë¸Ã¾ä×ÓÊÇÍ¬¼¶µÄ£¬Èç¹ûÊÇÒªÈ¥³ıÖØ¸´unifyµÄ¿ÉÄÜ
+					//åˆ¤æ–­è¦unifyçš„å¥å­æ˜¯å¦ä¸è¯¥å¥å­æ˜¯åŒçº§çš„ï¼Œå¦‚æœæ˜¯è¦å»é™¤é‡å¤unifyçš„å¯èƒ½
 					if(non_duplicate_unify.get(query_index).contains(index)){
 						continue;
 					}
-					//Ã»ÓĞ¸úÆäunify¹ı£¬ÄÇÃ´ÒªÔÚ¶Ô·½µÄHashSetÉÏ¼ÇÉÏÒ»±Ê£¬±ÜÃâÖØ¸´
+					//æ²¡æœ‰è·Ÿå…¶unifyè¿‡ï¼Œé‚£ä¹ˆè¦åœ¨å¯¹æ–¹çš„HashSetä¸Šè®°ä¸Šä¸€ç¬”ï¼Œé¿å…é‡å¤
 					else{
 						if(constant_sentences_index.contains(index)){
 							int unified_sentence_index=constant_sentences_index.indexOf(index);
@@ -476,7 +475,7 @@ public class homework {
 							
 							if(variable_split!=null && (q_variable_split.length == variable_split.length)){
 								Map<String,String> unify_results = new HashMap<String, String>();
-								//¶ÔÓ¦Î»ÖÃunify
+								//å¯¹åº”ä½ç½®unify
 								boolean success = unification(q_variable_split, variable_split, unify_results);
 								
 								if(success == true){
@@ -528,7 +527,7 @@ public class homework {
 									if(!sentence_1.equals("")){
 										for(int k=0;k<q_variable_split.length;k++){
 											String subsitute = unify_results.get(q_variable_split[k]);
-											//ÓĞsubsitute
+											//æœ‰subsitute
 											if(subsitute!=null){
 												String regex = "\\b"+q_variable_split[k]+"\\b";											
 												new_sentence = new_sentence.replaceAll(regex, subsitute);
@@ -546,7 +545,7 @@ public class homework {
 										}
 									}
 									
-									//×îºó½«ËùÓĞ±äÁ¿µÄ_index±êÊ¶¸üĞÂ£¬ÒÔÃâºÍkbÖĞÔ­ÓĞ¾ä×Ó»ìÏı
+									//æœ€åå°†æ‰€æœ‰å˜é‡çš„_indexæ ‡è¯†æ›´æ–°ï¼Œä»¥å…å’Œkbä¸­åŸæœ‰å¥å­æ··æ·†
 									Pattern p = Pattern.compile(".*\\d+.*");
 									Matcher m = p.matcher(new_sentence);
 
@@ -568,17 +567,17 @@ public class homework {
 	 * Give a query, unify it with kb, get all possible new sentences and add them to new_clauses
 	 * */
 	private static void resolve(ArrayList<HashSet<Integer>> non_duplicate_unify, HashMap<String,HashSet<Integer>> predicatemap, Map<String,Set<String>> querymap, int query_index){
-		//resolve constant_sentenceÖĞµÄÒ»¸ö¾ä×Ó£¬ind_new¶ÔÓ¦¾ä×ÓµÄÏÂ±ê£¬querymapÊÇÕû¸ö¾ä×ÓµÄmap±í´ï
+		//resolve constant_sentenceä¸­çš„ä¸€ä¸ªå¥å­ï¼Œind_newå¯¹åº”å¥å­çš„ä¸‹æ ‡ï¼Œquerymapæ˜¯æ•´ä¸ªå¥å­çš„mapè¡¨è¾¾
 		int kb_total_size = kb.size();
 		int new_kb_startpos = kb_total_size - cur_newclauses;
-		//query²»ÄÜ¸ú×Ô¼ºUnify
+		//queryä¸èƒ½è·Ÿè‡ªå·±Unify
 		non_duplicate_unify.get(query_index).add(new_kb_startpos+query_index);
 
 		for(Entry<String, Set<String>> entry : querymap.entrySet()){
 			String predicate = entry.getKey();
-			//queriesÊÇÒ»¸öpredicate(map.key)ÏÂËùÓĞµÄliteral
+			//queriesæ˜¯ä¸€ä¸ªpredicate(map.key)ä¸‹æ‰€æœ‰çš„literal
 			Set<String> queries = entry.getValue();
-			//queryÊÇÏàÍ¬predicateÏÂµÄÒ»¸öLiteral
+			//queryæ˜¯ç›¸åŒpredicateä¸‹çš„ä¸€ä¸ªLiteral
 			for(String query : queries){
 				char[] token = new char[query.length()];
 				token = query.toCharArray();
@@ -593,7 +592,7 @@ public class homework {
 					}
 				}
 				q_variable_split = q_variable.split("\\,");
-				HashSet<Integer> potential_sentences = new HashSet<Integer>(); //ËùÓĞ¾ä×ÓµÄÏÂ±ê
+				HashSet<Integer> potential_sentences = new HashSet<Integer>(); //æ‰€æœ‰å¥å­çš„ä¸‹æ ‡
 				String potential_key;
 				if(predicate.charAt(0) == '~'){
 					potential_key = predicate.substring(1,predicate.length());
@@ -609,13 +608,13 @@ public class homework {
 				Iterator<Integer> iter = potential_sentences.iterator();  
 				while(iter.hasNext()){	
 					int index = iter.next();
-					//ÅĞ¶ÏÒªunifyµÄ¾ä×ÓÊÇ·ñÓë¸Ã¾ä×ÓÊÇÍ¬¼¶µÄ£¬Èç¹ûÊÇÒªÈ¥³ıÖØ¸´unifyµÄ¿ÉÄÜ
+					//åˆ¤æ–­è¦unifyçš„å¥å­æ˜¯å¦ä¸è¯¥å¥å­æ˜¯åŒçº§çš„ï¼Œå¦‚æœæ˜¯è¦å»é™¤é‡å¤unifyçš„å¯èƒ½
 					if(index >= new_kb_startpos){
-						//¼ì²éÒ»ÏÂ±ğÈËÊÇ·ñÒÑ¾­Óë×Ô¼ºunify¹ıÁË£¬Èç¹ûÊÇ£¬Ìø¹ı¸Ã¾ä×Ó
+						//æ£€æŸ¥ä¸€ä¸‹åˆ«äººæ˜¯å¦å·²ç»ä¸è‡ªå·±unifyè¿‡äº†ï¼Œå¦‚æœæ˜¯ï¼Œè·³è¿‡è¯¥å¥å­
 						if(non_duplicate_unify.get(query_index).contains(index)){
 							continue;
 						}
-						//Ã»ÓĞ¸úÆäunify¹ı£¬ÄÇÃ´ÒªÔÚ¶Ô·½µÄHashSetÉÏ¼ÇÉÏÒ»±Ê£¬±ÜÃâÖØ¸´
+						//æ²¡æœ‰è·Ÿå…¶unifyè¿‡ï¼Œé‚£ä¹ˆè¦åœ¨å¯¹æ–¹çš„HashSetä¸Šè®°ä¸Šä¸€ç¬”ï¼Œé¿å…é‡å¤
 						else{
 							non_duplicate_unify.get(index-new_kb_startpos).add(query_index + new_kb_startpos);
 						}
@@ -647,7 +646,7 @@ public class homework {
 								Map<String,String> unify_results = new HashMap<String, String>();
 								boolean success = unification(q_variable_split, variable_split, unify_results);
 								if(success == true){
-									//¼ÓÈëĞÂ¾ä×Ó
+									//åŠ å…¥æ–°å¥å­
 									String sentence_1 = new_sentences.get(0);
 									if(querymap.size()==1 && queries.size()==1){
 										sentence_1 = "";
@@ -694,7 +693,7 @@ public class homework {
 									if(!sentence_1.equals("")){
 										for(int k=0;k<q_variable_split.length;k++){
 											String subsitute = unify_results.get(q_variable_split[k]);
-											//ÓĞsubsitute
+											//æœ‰subsitute
 											if(subsitute!=null){
 												String regex = "\\b"+q_variable_split[k]+"\\b";											
 												new_sentence = new_sentence.replaceAll(regex, subsitute);
@@ -727,7 +726,7 @@ public class homework {
 		}
 	}
 	
-	//¶ÔÓ¦Î»ÖÃunify
+	//å¯¹åº”ä½ç½®unify
 	private static boolean unification(String[] q_variable_split, String[] variable_split,Map<String,String> unify_results){
 		boolean flag;
 		for(int i=0;i<variable_split.length;i++){
@@ -739,14 +738,14 @@ public class homework {
 		return true;
 	}
 	
-	//Èç¹ûÄ³¸ö±äÁ¿ÒÑ¾­ÓĞÁËunify½á¹û£¬ÄÇÃ´¾ÍÄÃ¸Ã½á¹ûÌæ´ú±äÁ¿¼ÌĞøUnify£¬Ä¿±êÊÇÔ½Í³Ò»Ô½ºÃ
+	//å¦‚æœæŸä¸ªå˜é‡å·²ç»æœ‰äº†unifyç»“æœï¼Œé‚£ä¹ˆå°±æ‹¿è¯¥ç»“æœæ›¿ä»£å˜é‡ç»§ç»­Unifyï¼Œç›®æ ‡æ˜¯è¶Šç»Ÿä¸€è¶Šå¥½
 	private static boolean unify(String q_variable,String variable , Map<String,String>unify_results){
 		String subsitute;
 		boolean flag = false;
 		if(q_variable.equals(variable)){
 			return true;
 		}
-		//ÅĞ¶ÏË«·½ÊÇ·ñÊÇvariable
+		//åˆ¤æ–­åŒæ–¹æ˜¯å¦æ˜¯variable
 		if(Character.isLowerCase(q_variable.charAt(0))){
 			if((subsitute = unify_results.get(q_variable))!=null){
 				flag = unify(subsitute,variable,unify_results);
@@ -777,7 +776,7 @@ public class homework {
 	
 	//If no new clause could be added, return false
 	private static boolean updatekb(HashMap<String,HashSet<Integer>> predicatemap, Set<String> check){
-		//ÖÁÉÙÓĞÒ»¸öĞÂ¾ä×Ó£¬flag±äÎªtrue
+		//è‡³å°‘æœ‰ä¸€ä¸ªæ–°å¥å­ï¼Œflagå˜ä¸ºtrue
 		ArrayList<String> helper = new ArrayList<String>(new_sentences);
 		new_sentences.clear();
 		boolean flag = false;
@@ -792,7 +791,7 @@ public class homework {
 			HashSet<String> duplicate_check = new HashSet<String>();
 			for(int i=0; i<dnf.length;i++){
 				String temp = dnf[i];
-				//Ò»¾ä»°ÖĞ¿ÉÄÜÓĞÖØ¸´µÄ¾ä×Ó£»
+				//ä¸€å¥è¯ä¸­å¯èƒ½æœ‰é‡å¤çš„å¥å­ï¼›
 				if(duplicate_check.contains(temp)){
 					continue;
 				}
