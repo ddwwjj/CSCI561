@@ -418,6 +418,12 @@ public class homework {
 						}
 					}
 				}
+				//kb and kb unify，if one literal has no constant, skip
+				Pattern p = Pattern.compile(".*[A-Z].*");
+				Matcher m = p.matcher(q_variable);
+				if(!m.matches()){
+					continue;
+				}
 				q_variable_split = q_variable.split("\\,");
 				HashSet<Integer> potential_sentences = new HashSet<Integer>(); //所有句子的下标
 				String potential_key; //on the opposite of predicate
@@ -546,10 +552,10 @@ public class homework {
 									}
 									
 									//最后将所有变量的_index标识更新，以免和kb中原有句子混淆
-									Pattern p = Pattern.compile(".*\\d+.*");
-									Matcher m = p.matcher(new_sentence);
+									Pattern p1 = Pattern.compile(".*\\d+.*");
+									Matcher m1 = p1.matcher(new_sentence);
 
-									if (m.matches()){
+									if (m1.matches()){
 										new_sentence = new_sentence.replaceAll("\\d+", ""+variable_num++);	
 									}							
 									new_sentences.add(new_sentence);
