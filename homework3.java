@@ -1,7 +1,7 @@
 /*
  * HW3: First-Order Logic Resolution
  * Date: 2017/11/16
- * Grade:
+ * Grade: 102/106, 2 wrong test cases
  * Method: Run resolution iteratively until get "" sentence(True) or there is no new clauses be added into KB(False).
  * First, negate the query and add it to KB, put all sentences that contain at least on constant argument and the negated query
  * to "new_sentences" as the first round queries and unify them with the rest of KB. After that, I will iteratively
