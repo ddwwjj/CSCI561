@@ -1,6 +1,6 @@
 // homework1.cpp
 //update date: 9/15/2017
-//score: 100
+//score: 110/110 top 10 students of the most fast speed
 //version 4
 /*
 implement segmentation array for contradiction search
