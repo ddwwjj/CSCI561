@@ -1,6 +1,6 @@
 // homework2.cpp
 //date:16/10/2017
-//score: 99/100
+//score: 100/100
 /*Version:4
 No memfree cause system will release memory automatically.
 Select the first move using alpha-belta prunning.
